@@ -167,11 +167,22 @@ const App = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Filter out empty values and convert to numbers
+    const cleanedInput = {};
+    Object.keys(input).forEach(key => {
+      if (input[key] && input[key].trim() !== '') {
+        cleanedInput[key] = parseFloat(input[key]) || 0;
+      } else {
+        cleanedInput[key] = 0; // Default value for empty fields
+      }
+    });
+    
     try {
       const response = await fetch("/api/predict", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(input),
+        body: JSON.stringify(cleanedInput),
       });
       const data = await response.json();
       console.log(data, "work");
@@ -349,11 +360,11 @@ const App = () => {
 
         {prediction && (
           <div style={resultStyle}>
-            <div>
+       {/*     <div>
               <span>
                 <strong>Fertility Grade:</strong> {prediction.grade_fertility}
               </span>
-            </div>
+            </div>*/}
             <div>
               <span>
                 <strong>Recommended Fertilizer:</strong>{" "}

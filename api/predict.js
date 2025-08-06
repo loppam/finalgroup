@@ -1,4 +1,3 @@
-
 export default async function handler(req, res) {
   const response = await fetch("http://143.244.161.196:3001/predict", {
     method: "POST",
